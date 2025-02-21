@@ -1,54 +1,80 @@
 package swe304.swe304_1.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import swe304.swe304_1.entity.Person;
+import swe304.swe304_1.form.PersonForm;
 import swe304.swe304_1.service.PersonService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @Controller
-@RequestMapping("/persons")
+@RequestMapping("/person")
 public class PersonController {
+
     private final PersonService service;
 
+    @Autowired
     public PersonController(PersonService service) {
         this.service = service;
     }
 
-    @GetMapping
-    public String listPersons(Model model) {
+    @GetMapping("")
+    public String index(Model model) {
+        model.addAttribute("title", "Persons List");
+        model.addAttribute("view", "person/index");
         model.addAttribute("persons", service.getAllPersons());
-        return "index";
+
+        return "layout";
     }
 
-    @PostMapping("/add")
-    public String addPerson(@ModelAttribute Person person) {
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("title", "Create Person");
+        model.addAttribute("view", "person/create");
+        model.addAttribute("type", "create");
+        model.addAttribute("personForm", new PersonForm());
+
+        return "layout";
+    }
+
+    @PostMapping("/create")
+    public String savePerson(@ModelAttribute("personForm") PersonForm personForm) {
+        Person person = new Person();
+        person.setName(personForm.getName());
+        person.setAddress(personForm.getAddress());
+
         service.savePerson(person);
-        return "redirect:/persons";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deletePerson(@PathVariable int id) {
-        service.deletePerson(id);
-        return "redirect:/persons";
+        return "redirect:/person";
     }
 
     @GetMapping("/update/{id}")
-    public String showUpdateForm(@PathVariable Integer id, Model model) {
-        Optional<Person> person = service.getPersonById(id);
-        if (person.isPresent()) {
-            model.addAttribute("person", person.get());
-            return "update-person";
-        } else {
-            return "redirect:/persons";
-        }
+    public String update(@PathVariable Integer id, Model model) {
+        Person person = service.getPersonById(id);
+        PersonForm personForm = new PersonForm();
+
+        personForm.setId(person.getId());
+        personForm.setName(person.getName());
+        personForm.setAddress(person.getAddress());
+
+        model.addAttribute("title", "Update Person");
+        model.addAttribute("view", "person/update");
+        model.addAttribute("type", "update");
+
+        model.addAttribute("personForm", personForm);
+        return "layout";
     }
 
-    @PostMapping("/update/{id}")
-    public String updatePerson(@PathVariable Integer id, @ModelAttribute Person person) {
-        service.updatePerson(id, person);
-        return "redirect:/persons";
+    @PostMapping("/update")
+    public String updatePerson(@ModelAttribute("personForm") PersonForm personForm) {
+        service.updatePerson(personForm);
+        return "redirect:/person";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deletePerson(@PathVariable Integer id) {
+        service.deletePerson(id);
+        return "redirect:/person";
     }
 }

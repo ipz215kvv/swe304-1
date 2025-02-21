@@ -21,18 +21,10 @@ Make sure you have the following installed on your system:
     Create a `.env` file in the root directory and populate it with variables like showed in [example](.env.example).
 
 3. **Create database locally**  
-    If MySQL is installed locally, create the database manually:
+    If MySQL is installed locally, create the database manually, all required tables will be generated automatically:
 
     ```sql
     CREATE DATABASE swe304;
-    ```
-
-    ```sql
-    CREATE TABLE person (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(16),
-        address VARCHAR(32)
-    );
     ```
 
 

@@ -1,6 +1,7 @@
 package swe304.swe304_1.service;
 
 import swe304.swe304_1.entity.Person;
+import swe304.swe304_1.form.PersonForm;
 import swe304.swe304_1.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,7 @@ public class PersonService {
         return repository.findAll();
     }
 
-    public Optional<Person> getPersonById(Integer id) {
-        return repository.findById(id);
-    }
+    public Person getPersonById(Integer id) { return repository.findById(id).orElseThrow(() -> new Error("Person error")); }
 
     public void savePerson(Person person) {
         repository.save(person);
@@ -31,7 +30,8 @@ public class PersonService {
         repository.deleteById(id);
     }
 
-    public Person updatePerson(Integer id, Person updatedPerson) {
+    public Person updatePerson(PersonForm updatedPerson) {
+        Integer id = updatedPerson.getId();
         Optional<Person> existingPerson = repository.findById(id);
 
         if (existingPerson.isPresent()) {
@@ -40,7 +40,7 @@ public class PersonService {
             person.setAddress(updatedPerson.getAddress());
             return repository.save(person);
         } else {
-            throw new RuntimeException("Person not found with ID: " + id);
+            throw new RuntimeException("Person not found with ID: " + updatedPerson);
         }
     }
 }
