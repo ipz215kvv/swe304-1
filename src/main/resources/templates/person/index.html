@@ -25,6 +25,7 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
+                                <th style="width: 70px">Image</th>
                                 <th>Name</th>
                                 <th>Address</th>
                                 <th>Actions</th>
@@ -33,6 +34,9 @@
                             <tbody>
                             <tr th:each="person : ${persons}">
                                 <td th:text="${person.id}"></td>
+                                <td>
+                                    <img th:src="${person.imgUrl != null and !person.imgUrl.isEmpty()} ? ${person.imgUrl} : '/images/default_avatar.png'" th:alt="${person.id}" class="img-circle img-size-32 mr-2">
+                                </td>
                                 <td th:text="${person.name}"></td>
                                 <td th:text="${person.address}"></td>
                                 <td>
@@ -44,6 +48,7 @@
                             <tfoot>
                             <tr>
                                 <th>ID</th>
+                                <th>Image</th>
                                 <th>Name</th>
                                 <th>Address</th>
                                 <th>Actions</th>

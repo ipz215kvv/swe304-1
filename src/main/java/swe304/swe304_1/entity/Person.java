@@ -22,4 +22,6 @@ public class Person {
 
     @Column(nullable = false)
     private String address;
+
+    private String imgUrl;
 }

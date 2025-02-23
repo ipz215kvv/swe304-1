@@ -3,6 +3,7 @@ package swe304.swe304_1.form;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class PersonForm {
@@ -17,4 +18,7 @@ public class PersonForm {
     @Size(max = 32, message = "Address cannot be longer than 32 characters")
     private String address;
 
+    private MultipartFile image;
+
+    private String imgUrl;
 }

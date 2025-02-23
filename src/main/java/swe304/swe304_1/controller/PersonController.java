@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 
 @Controller
 @RequestMapping("/person")
@@ -25,7 +27,6 @@ public class PersonController {
         model.addAttribute("title", "Persons List");
         model.addAttribute("view", "person/index");
         model.addAttribute("persons", service.getAllPersons());
-
         return "layout";
     }
 
@@ -35,17 +36,12 @@ public class PersonController {
         model.addAttribute("view", "person/create");
         model.addAttribute("type", "create");
         model.addAttribute("personForm", new PersonForm());
-
         return "layout";
     }
 
     @PostMapping("/create")
-    public String savePerson(@ModelAttribute("personForm") PersonForm personForm) {
-        Person person = new Person();
-        person.setName(personForm.getName());
-        person.setAddress(personForm.getAddress());
-
-        service.savePerson(person);
+    public String createPerson(@ModelAttribute("personForm") PersonForm personForm) throws IOException {
+        service.savePerson(personForm);
         return "redirect:/person";
     }
 
@@ -61,13 +57,12 @@ public class PersonController {
         model.addAttribute("title", "Update Person");
         model.addAttribute("view", "person/update");
         model.addAttribute("type", "update");
-
         model.addAttribute("personForm", personForm);
         return "layout";
     }
 
     @PostMapping("/update")
-    public String updatePerson(@ModelAttribute("personForm") PersonForm personForm) {
+    public String updatePerson(@ModelAttribute("personForm") PersonForm personForm) throws IOException {
         service.updatePerson(personForm);
         return "redirect:/person";
     }
