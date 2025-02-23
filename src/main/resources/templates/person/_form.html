@@ -26,7 +26,7 @@
 
                 <!-- Image Preview -->
                 <div class="form-group">
-                    <img id="imagePreview" th:if="${personForm.image != null}" th:src="@{${personForm.imgUrl}}" alt="Preview" style="max-width: 150px; display: block;">
+                    <img id="imagePreview" th:src="*{imgUrl}" alt="Preview" style="max-width: 150px; display: block;">
                 </div>
 
             </div>
@@ -39,13 +39,18 @@
 
     <script>
         function previewImage(event) {
-            const input = event.target;
-            const reader = new FileReader();
+            let input = event.target;
+            let reader = new FileReader();
 
             reader.onload = function () {
-                const preview = document.getElementById('imagePreview');
-                preview.src = reader.result;
-                preview.style.display = 'block';
+                let preview = document.getElementById('imagePreview');
+
+                if (preview) {
+                    preview.src = reader.result;
+                    preview.style.display = 'block';
+                } else {
+                    console.error('Image preview element not found');
+                }
             };
 
             if (input.files.length > 0) {

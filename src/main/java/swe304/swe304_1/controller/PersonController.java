@@ -53,6 +53,7 @@ public class PersonController {
         personForm.setId(person.getId());
         personForm.setName(person.getName());
         personForm.setAddress(person.getAddress());
+        personForm.setImgUrl(person.getImgUrl());
 
         model.addAttribute("title", "Update Person");
         model.addAttribute("view", "person/update");
