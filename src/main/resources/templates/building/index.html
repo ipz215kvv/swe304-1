@@ -1,0 +1,56 @@
+<div th:fragment="content">
+
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 mt-3 mt-md-0">
+                    <a href="/building/create" type="button" class="btn btn-block btn-outline-success btn-sm">Create New Building</a>
+                </div>
+                <div class="col-sm-12 col-md-9">
+<!--                    <h3 class="card-title">List of Buildings</h3>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6"></div>
+                    <div class="col-sm-12 col-md-6"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="example2" class="table table-bordered table-hover dataTable dtr-inline"
+                               aria-describedby="example2_info">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="building : ${buildings}">
+                                <td th:text="${building.id}"></td>
+                                <td th:text="${building.address}"></td>
+                                <td>
+                                    <a th:href="@{/building/update/{id}(id=${building.id})}">Update</a>
+                                    <a th:href="@{/building/delete/{id}(id=${building.id})}">Delete</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Address</th>
+                                <th>Actions</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,4 @@
+CREATE TABLE building (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    address VARCHAR(32) NOT NULL
+);
