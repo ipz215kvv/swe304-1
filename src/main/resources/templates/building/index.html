@@ -25,14 +25,20 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Address</th>
+                                <th>Country</th>
+                                <th>City</th>
+                                <th>Street</th>
+                                <th>Number</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="building : ${buildings}">
                                 <td th:text="${building.id}"></td>
-                                <td th:text="${building.address}"></td>
+                                <td th:text="${building.country}"></td>
+                                <td th:text="${building.city}"></td>
+                                <td th:text="${building.street}"></td>
+                                <td th:text="${building.number}"></td>
                                 <td>
                                     <a th:href="@{/building/update/{id}(id=${building.id})}">Update</a>
                                     <a th:href="@{/building/delete/{id}(id=${building.id})}">Delete</a>
@@ -42,7 +48,10 @@
                             <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Address</th>
+                                <th>Country</th>
+                                <th>City</th>
+                                <th>Street</th>
+                                <th>Number</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>

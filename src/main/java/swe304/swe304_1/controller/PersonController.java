@@ -2,6 +2,8 @@ package swe304.swe304_1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import swe304.swe304_1.entity.Person;
+import swe304.swe304_1.entity.Building;
+import swe304.swe304_1.repository.BuildingRepository;
 import swe304.swe304_1.form.PersonForm;
 import swe304.swe304_1.service.PersonService;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -16,10 +19,12 @@ import java.io.IOException;
 public class PersonController {
 
     private final PersonService service;
+    private final BuildingRepository buildingRepository;
 
     @Autowired
-    public PersonController(PersonService service) {
+    public PersonController(PersonService service, BuildingRepository buildingRepository) {
         this.service = service;
+        this.buildingRepository = buildingRepository;
     }
 
     @GetMapping("")
@@ -32,6 +37,9 @@ public class PersonController {
 
     @GetMapping("/create")
     public String create(Model model) {
+        List<Building> buildings = buildingRepository.findAll();
+
+        model.addAttribute("buildings", buildings);
         model.addAttribute("title", "Create Person");
         model.addAttribute("view", "person/create");
         model.addAttribute("type", "create");
@@ -52,9 +60,14 @@ public class PersonController {
 
         personForm.setId(person.getId());
         personForm.setName(person.getName());
-        personForm.setAddress(person.getAddress());
+        personForm.setBuildingId(person.getBuilding() != null ? person.getBuilding().getId() : null);
+        personForm.setOccupation(person.getOccupation());
+        personForm.setFloor(person.getFloor());
+        personForm.setNumber(person.getNumber());
         personForm.setImgUrl(person.getImgUrl());
 
+        List<Building> buildings = buildingRepository.findAll();
+        model.addAttribute("buildings", buildings);
         model.addAttribute("title", "Update Person");
         model.addAttribute("view", "person/update");
         model.addAttribute("type", "update");

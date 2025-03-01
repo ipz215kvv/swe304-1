@@ -7,11 +7,6 @@ import lombok.Data;
 @Entity
 @Table(name = "person")
 @Data
-//@Data contains all this annotations(and even more):
-//@Getter
-//@Setter
-//@RequiredArgsConstructor
-
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +16,17 @@ public class Person {
     private String name;
 
     @Column(nullable = false)
-    private String address;
+    private String occupation;
+
+    @Column(nullable = false)
+    private Integer floor;
+
+    @Column(nullable = false)
+    private String number;
 
     private String imgUrl;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE} )
+    @JoinColumn(name = "building_id", nullable = false)
+    private Building building;
 }

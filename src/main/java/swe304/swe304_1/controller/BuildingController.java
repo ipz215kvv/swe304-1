@@ -51,7 +51,10 @@ public class BuildingController {
         BuildingForm buildingForm = new BuildingForm();
 
         buildingForm.setId(building.getId());
-        buildingForm.setAddress(building.getAddress());
+        buildingForm.setCountry(building.getCountry());
+        buildingForm.setCity(building.getCity());
+        buildingForm.setStreet(building.getStreet());
+        buildingForm.setNumber(building.getNumber());
 
         model.addAttribute("title", "Update Building");
         model.addAttribute("view", "building/update");

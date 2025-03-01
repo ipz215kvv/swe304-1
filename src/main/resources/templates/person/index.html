@@ -27,7 +27,10 @@
                                 <th>ID</th>
                                 <th style="width: 70px">Image</th>
                                 <th>Name</th>
-                                <th>Address</th>
+                                <th>Occupation</th>
+                                <th>Floor</th>
+                                <th>Number</th>
+                                <th>Street</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -38,7 +41,10 @@
                                     <img th:src="${person.imgUrl != null and !person.imgUrl.isEmpty()} ? ${person.imgUrl} : '/images/default_avatar.png'" th:alt="${person.id}" class="img-circle img-size-32 mr-2">
                                 </td>
                                 <td th:text="${person.name}"></td>
-                                <td th:text="${person.address}"></td>
+                                <td th:text="${person.occupation}"></td>
+                                <td th:text="${person.floor}"></td>
+                                <td th:text="${person.number}"></td>
+                                <td th:text="${person.building.street}"></td>
                                 <td>
                                     <a th:href="@{/person/update/{id}(id=${person.id})}">Update</a>
                                     <a th:href="@{/person/delete/{id}(id=${person.id})}">Delete</a>
@@ -48,9 +54,12 @@
                             <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Image</th>
+                                <th style="width: 70px">Image</th>
                                 <th>Name</th>
-                                <th>Address</th>
+                                <th>Occupation</th>
+                                <th>Floor</th>
+                                <th>Number</th>
+                                <th>Street</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>

@@ -25,7 +25,10 @@ public class BuildingService {
 
     public void saveBuilding(BuildingForm buildingForm) throws IOException {
         Building building = new Building();
-        building.setAddress(buildingForm.getAddress());
+        building.setCountry(buildingForm.getCountry());
+        building.setCity(buildingForm.getCity());
+        building.setStreet(buildingForm.getStreet());
+        building.setNumber(buildingForm.getNumber());
 
         repository.save(building);
     }
@@ -36,7 +39,10 @@ public class BuildingService {
 
         if (existingBuilding.isPresent()) {
             Building building = existingBuilding.get();
-            building.setAddress(updatedBuilding.getAddress());
+            building.setCountry(updatedBuilding.getCountry());
+            building.setCity(updatedBuilding.getCity());
+            building.setStreet(updatedBuilding.getStreet());
+            building.setNumber(updatedBuilding.getNumber());
 
             repository.save(building);
         } else {

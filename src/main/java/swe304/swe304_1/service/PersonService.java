@@ -1,8 +1,10 @@
 package swe304.swe304_1.service;
 
 import swe304.swe304_1.entity.Person;
+import swe304.swe304_1.entity.Building;
 import swe304.swe304_1.form.PersonForm;
 import swe304.swe304_1.repository.PersonRepository;
+import swe304.swe304_1.repository.BuildingRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,10 +14,12 @@ import java.util.Optional;
 @Service
 public class PersonService {
     private final PersonRepository repository;
+    private final BuildingRepository buildingRepository;
     private final StorageService storageService;
 
-    public PersonService(PersonRepository repository, StorageService storageService) {
+    public PersonService(PersonRepository repository, BuildingRepository buildingRepository, StorageService storageService) {
         this.repository = repository;
+        this.buildingRepository = buildingRepository;
         this.storageService = storageService;
     }
 
@@ -28,7 +32,14 @@ public class PersonService {
     public void savePerson(PersonForm personForm) throws IOException {
         Person person = new Person();
         person.setName(personForm.getName());
-        person.setAddress(personForm.getAddress());
+        person.setOccupation(personForm.getOccupation());
+        person.setFloor(personForm.getFloor());
+        person.setNumber(personForm.getNumber());
+
+        if (personForm.getBuildingId() != null) {
+            Building building = buildingRepository.findById(personForm.getBuildingId()).orElseThrow(() -> new RuntimeException("Building not found"));
+            person.setBuilding(building);
+        }
 
         if (personForm.getImage() != null && !personForm.getImage().isEmpty()) {
             String imageUrl = storageService.storeFile(personForm.getImage());
@@ -45,7 +56,14 @@ public class PersonService {
         if (existingPerson.isPresent()) {
             Person person = existingPerson.get();
             person.setName(updatedPerson.getName());
-            person.setAddress(updatedPerson.getAddress());
+            person.setOccupation(updatedPerson.getOccupation());
+            person.setFloor(updatedPerson.getFloor());
+            person.setNumber(updatedPerson.getNumber());
+
+            if (updatedPerson.getBuildingId() != null) {
+                Building building = buildingRepository.findById(updatedPerson.getBuildingId()).orElse(null);
+                person.setBuilding(building);
+            }
 
             if (updatedPerson.getImage() != null && !updatedPerson.getImage().isEmpty()) {
                 String imageUrl = storageService.storeFile(updatedPerson.getImage());
