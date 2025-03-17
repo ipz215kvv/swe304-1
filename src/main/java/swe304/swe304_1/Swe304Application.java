@@ -12,6 +12,9 @@ public class Swe304Application {
 	public static void main(String[] args) {
         try {
             Dotenv dotenv = Dotenv.load();
+			
+			setSystemProperty("MYSQL_USER", dotenv.get("MYSQL_USER"));
+			setSystemProperty("MYSQL_PASSWORD", dotenv.get("MYSQL_PASSWORD"));
 			setSystemProperty("MYSQL_HOST", dotenv.get("MYSQL_HOST"));
 			setSystemProperty("MYSQL_PORT", dotenv.get("MYSQL_PORT"));
 			setSystemProperty("MYSQL_DATABASE", dotenv.get("MYSQL_DATABASE"));
