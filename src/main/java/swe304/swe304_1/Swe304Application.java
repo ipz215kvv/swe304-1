@@ -15,6 +15,11 @@ public class Swe304Application {
 			setSystemProperty("MYSQL_HOST", dotenv.get("MYSQL_HOST"));
 			setSystemProperty("MYSQL_PORT", dotenv.get("MYSQL_PORT"));
 			setSystemProperty("MYSQL_DATABASE", dotenv.get("MYSQL_DATABASE"));
+			
+			setSystemProperty("AWS_ACCESS_KEY", dotenv.get("AWS_ACCESS_KEY"));
+			setSystemProperty("AWS_SECRET_KEY", dotenv.get("AWS_SECRET_KEY"));
+			setSystemProperty("AWS_S3_REGION", dotenv.get("AWS_S3_REGION"));
+			setSystemProperty("AWS_S3_BUCKET_NAME", dotenv.get("AWS_S3_BUCKET_NAME"));
         } catch (Exception e) {
 			
 		}

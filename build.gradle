@@ -21,6 +21,9 @@ repositories {
 }
 
 dependencies {
+    implementation platform('com.amazonaws:aws-java-sdk-bom:1.12.529')
+    implementation 'com.amazonaws:aws-java-sdk-s3'
+
     implementation 'org.springframework.boot:spring-boot-starter-web:3.2.2'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.2'
