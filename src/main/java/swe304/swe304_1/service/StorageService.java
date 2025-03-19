@@ -1,5 +1,6 @@
 package swe304.swe304_1.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -8,8 +9,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
-
-import swe304.swe304_1.configuration.S3Configuration;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,10 +21,18 @@ import java.util.UUID;
 @Service
 public class StorageService {
 
-    String s3Region = System.getProperty("AWS_S3_REGION");
+    @Value("${AWS_S3_REGION}")
+    private String s3Region;
 
-    String bucketName = System.getProperty("AWS_S3_BUCKET_NAME");
-    AmazonS3 s3Client = new S3Configuration().getAmazonS3Client();
+    @Value("${AWS_S3_BUCKET_NAME}")
+    private String bucketName;
+
+    private final AmazonS3 s3Client;
+
+    @Autowired
+    public StorageService(AmazonS3 s3Client) {
+        this.s3Client = s3Client;
+    }
 
     public String storeFile(MultipartFile file) throws IOException {
         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
