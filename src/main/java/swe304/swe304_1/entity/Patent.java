@@ -2,31 +2,24 @@ package swe304.swe304_1.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.util.List;
 
 
 @Entity
-@Table(name = "person")
+@Table(name = "patent")
 @Data
-public class Person {
+public class Patent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private String name;
+    private String title;
 
     @Column(nullable = false)
-    private String occupation;
-
-    @Column(nullable = false)
-    private Integer floor;
-
-    @Column(nullable = false)
-    private String number;
-
-    private String imgUrl;
+    private String description;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE} )
-    @JoinColumn(name = "building_id", nullable = false)
-    private Building building;
+    @JoinColumn(name = "author_id", nullable = false)
+    private Author author;
 }
