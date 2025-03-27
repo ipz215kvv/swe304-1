@@ -2,6 +2,7 @@ package swe304.swe304_1.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.util.List;
 
 
 @Entity
