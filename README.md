@@ -40,7 +40,9 @@ Make sure you have the following installed on your system:
 5. **Access the Web App**
 
     Once running, open your browser and go to:  
-    👉 [http://localhost:8080](http://localhost:8080)
+    👉 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+    You will see the project scheme here.
 
 
 ## **🧳 Migrating from Maven to Gradle**
