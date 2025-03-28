@@ -21,7 +21,7 @@ public class AuthorController {
     private StorageService storageService;
 
     @PostMapping
-    public AuthorDTO createAuthor(@RequestParam("author") AuthorDTO authorDTO,
+    public AuthorDTO createAuthor(@ModelAttribute("author") AuthorDTO authorDTO,
                                    @RequestParam("image") MultipartFile imageFile) throws IOException {
         if (imageFile != null && !imageFile.isEmpty()) {
             String imageUrl = storageService.storeFile(imageFile);
@@ -32,7 +32,7 @@ public class AuthorController {
 
     @PutMapping("/{id}")
     public AuthorDTO updateAuthor(@PathVariable Integer id,
-                                   @RequestParam("author") AuthorDTO authorDTO,
+                                   @ModelAttribute("author") AuthorDTO authorDTO,
                                    @RequestParam(value = "image", required = false) MultipartFile imageFile) throws IOException {
         if (imageFile != null && !imageFile.isEmpty()) {
             String imageUrl = storageService.storeFile(imageFile);
