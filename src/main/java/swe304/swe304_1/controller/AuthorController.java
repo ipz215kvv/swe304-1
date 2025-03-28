@@ -50,4 +50,14 @@ public class AuthorController {
     public List<AuthorDTO> getAllAuthors() {
         return authorService.getAllAuthors();
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteAuthor(@PathVariable Integer id) {
+        AuthorDTO author = authorService.getAuthorById(id);
+        if (author != null && author.getImgUrl() != null) {
+            String fileName = author.getImgUrl().substring(author.getImgUrl().lastIndexOf("/") + 1);
+            storageService.deleteFile(fileName);
+        }
+        authorService.deleteAuthor(id);
+    }
 }

@@ -10,12 +10,8 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @Service
@@ -37,8 +33,9 @@ public class StorageService {
     public String storeFile(MultipartFile file) throws IOException {
         String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 
-        try (InputStream stream = file.getInputStream()){
-            PutObjectRequest request = new PutObjectRequest(bucketName, fileName, stream, null).withCannedAcl(CannedAccessControlList.PublicRead);
+        try (InputStream stream = file.getInputStream()) {
+            PutObjectRequest request = new PutObjectRequest(bucketName, fileName, stream, null)
+                    .withCannedAcl(CannedAccessControlList.PublicRead);
             s3Client.putObject(request);
         } catch (AmazonServiceException e) {
             e.printStackTrace();
@@ -47,4 +44,11 @@ public class StorageService {
         return String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, s3Region, fileName);
     }
 
+    public void deleteFile(String fileName) {
+        try {
+            s3Client.deleteObject(bucketName, fileName);
+        } catch (AmazonServiceException e) {
+            e.printStackTrace();
+        }
+    }
 }

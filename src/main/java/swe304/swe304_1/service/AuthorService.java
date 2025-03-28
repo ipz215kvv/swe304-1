@@ -50,6 +50,12 @@ public class AuthorService {
         return convertToDTO(updatedAuthor);
     }
 
+    public void deleteAuthor(Integer id) {
+        Author author = authorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Author not found with ID: " + id));
+        authorRepository.delete(author);
+    }
+
     private AuthorDTO convertToDTO(Author author) {
         AuthorDTO dto = new AuthorDTO();
         dto.setId(author.getId());
