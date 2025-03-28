@@ -1,5 +1,7 @@
 # **SWE 304 Group Project**
 
+Our Postman [project](https://www.postman.com/iamkorniichuk/swe304/).
+
 ## **🛠 Prerequisites**
 
 Make sure you have the following installed on your system:
