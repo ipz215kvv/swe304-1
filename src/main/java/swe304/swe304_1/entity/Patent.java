@@ -20,6 +20,6 @@ public class Patent {
     private String description;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE} )
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(name = "authorId", nullable = false)
     private Author author;
 }

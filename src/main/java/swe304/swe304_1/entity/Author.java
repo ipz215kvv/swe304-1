@@ -21,6 +21,6 @@ public class Author {
 
     private String imgUrl;
 
-    @OneToMany(mappedBy = "patent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Patent> patents;
 }
