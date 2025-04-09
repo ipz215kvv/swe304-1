@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    image: ipz215kvv/swe304
     depends_on:
       db:
         condition: service_healthy
