@@ -21,7 +21,7 @@ Make sure you have the following installed on your system:
 
 2. **`.env` file**
 
-    Create a `.env` file in the root directory and populate it with variables like shown in the [example](.env.example).
+    Create a `.env` file in the root directory and populate it with variables like shown in the [example](.env).
 
 3. **Build `.jar` file**
 
