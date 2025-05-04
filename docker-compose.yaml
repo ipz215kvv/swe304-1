@@ -1,6 +1,6 @@
 services:
   app:
-    image: ipz215kvv/swe304
+    image: aysenurdocker/swe304
     depends_on:
       db:
         condition: service_healthy
