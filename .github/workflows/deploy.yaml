@@ -1,0 +1,62 @@
+name: Complete Job
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  complete-job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+    environment: Default
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Create .env file
+      run: |
+        cat <<EOF > .env
+        AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
+        AWS_S3_REGION=${{ secrets.AWS_S3_REGION }}
+        AWS_S3_BUCKET_NAME=${{ secrets.AWS_S3_BUCKET_NAME }}
+
+        MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+        MYSQL_USER=${{ secrets.MYSQL_USER }}
+        MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+        EOF
+
+    - name: Build JAR
+      run: ./gradlew clean bootJar
+
+    - name: Build Docker image
+      run: |
+        docker compose build
+    
+    - name: Login to DockerHub
+      run: |
+        echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u ipz215kvv --password-stdin
+    
+    - name: Push Docker image
+      run: docker compose push
+
+    - name: Create pem file
+      run: |
+        cat <<EOF > key.pem
+        ${{ secrets.EC2_SSH_KEY }}
+        EOF
+        chmod 400 key.pem
+
+    - name: Copy JAR to EC2
+      run: |
+        scp -o StrictHostKeyChecking=no -i key.pem build/libs/swe304-1-1.0.0.jar ${{ secrets.EC2_CONNECTION_STRING }}:~/swe304

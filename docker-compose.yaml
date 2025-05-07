@@ -1,6 +1,8 @@
 services:
   app:
     image: ipz215kvv/swe304
+    build:
+      context: .
     depends_on:
       db:
         condition: service_healthy
